@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.config.Configuration;
@@ -11,10 +13,11 @@ import gr.iti.mklab.sfc.utils.MinHash;
 import gr.iti.mklab.sfc.utils.TextUtils;
 
 public class MinHashExtractor extends Processor {
-
 	
-	private MinHash minHash;
-	private MinHash singatureHash;
+	private Logger logger = LogManager.getLogger(MinHashExtractor.class);
+	
+	private MinHash minHash = null;
+	private MinHash singatureHash = null;
 	
 	public MinHashExtractor(Configuration configuration) {
 		super(configuration);
@@ -22,8 +25,11 @@ public class MinHashExtractor extends Processor {
 		int minhashNum = Integer.getInteger(configuration.getParameter("minhashNum", "32"));
 		int singatureNum = Integer.getInteger(configuration.getParameter("singatureNum", "128"));
 		
+		logger.info("minhash length: " + minhashNum + ", singature length: " + singatureNum);
+		
 		this.minHash = MinHash.getInstance(1, minhashNum);
 		this.singatureHash = MinHash.getInstance(1, singatureNum);
+		
 	}
 
 	@Override
@@ -31,7 +37,6 @@ public class MinHashExtractor extends Processor {
 		String title = item.getTitle();
 		if(title != null) {
 			try {
-				
 				title = TextUtils.clean(title);
 				title = title.toLowerCase();
 				title = TextUtils.normalize(title);
@@ -47,12 +52,13 @@ public class MinHashExtractor extends Processor {
 				String minhash = MinHash.toBinaryString(hashdata);
 				String signature = MinHash.toBinaryString(signaturedata);
 				
-				
 				item.setMinhash(minhash);
 				item.setSignature(signature);
 				
-			} catch (IOException e) {
+				item.setCleanTitle(title);
 				
+			} catch (IOException e) {
+				logger.error("Exception in minhash extractor for items " + item.getId(), e);
 			}
 			
 		}

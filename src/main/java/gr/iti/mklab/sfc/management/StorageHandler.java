@@ -192,7 +192,7 @@ public class StorageHandler implements Runnable {
 	private void createProcessors(StreamsManagerConfiguration config) throws StreamException {
 		for (String processorId : config.getProcessorsIds()) {
 			try {
-					
+				logger.info("Initialize processor " + processorId);
 				Configuration pconfig = config.getProcessorConfig(processorId);
 				String className = pconfig.getParameter(Configuration.CLASS_PATH);
 				Constructor<?> constructor = Class.forName(className).getConstructor(Configuration.class);
