@@ -22,10 +22,10 @@ public class MinHashExtractor extends Processor {
 	public MinHashExtractor(Configuration configuration) {
 		super(configuration);
 		
-		int minhashNum = Integer.getInteger(configuration.getParameter("minhashNum", "32"));
-		int singatureNum = Integer.getInteger(configuration.getParameter("singatureNum", "128"));
+		logger.info("minhash length: " + configuration.getParameter("minhashNum", "32") + ", singature length: " + configuration.getParameter("singatureNum", "128"));
 		
-		logger.info("minhash length: " + minhashNum + ", singature length: " + singatureNum);
+		int minhashNum = Integer.parseInt(configuration.getParameter("minhashNum", "32"));
+		int singatureNum = Integer.parseInt(configuration.getParameter("singatureNum", "128"));
 		
 		this.minHash = MinHash.getInstance(1, minhashNum);
 		this.singatureHash = MinHash.getInstance(1, singatureNum);
