@@ -228,10 +228,25 @@ public class MinHash {
                 }
                 bits <<= 1;
             }
+            buf.append(' ');
         }
         return buf.toString();
     }
 
+    /**
+     * Returns a string formatted by bits.
+     * 
+     * @param data
+     * @return
+     */
+    public static String toString(final byte[] data) {
+        if (data == null) {
+            return null;
+        }
+        
+        return BaseEncoding.base64().encode(data);
+    }
+    
     /**
      * Count the number of true bits.
      * 

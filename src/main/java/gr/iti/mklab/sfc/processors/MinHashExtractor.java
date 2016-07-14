@@ -49,8 +49,8 @@ public class MinHashExtractor extends Processor {
 				byte[] hashdata = minHash.calculate(title);
 				byte[] signaturedata = singatureHash.calculate(title);
 				
-				String minhash = MinHash.toBinaryString(hashdata);
-				String signature = MinHash.toBinaryString(signaturedata);
+				String minhash = MinHash.toString(hashdata);
+				String signature = MinHash.toString(signaturedata);
 				
 				item.setMinhash(minhash);
 				item.setSignature(signature);
