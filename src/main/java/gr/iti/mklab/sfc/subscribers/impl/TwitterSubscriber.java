@@ -110,22 +110,24 @@ public class TwitterSubscriber extends Subscriber {
 			Set<Long> userids = new HashSet<Long>();
 			List<double[]> locs = new ArrayList<double[]>();
 			
-			logger.info(feeds.size() + " feeds to track");
-			for(Feed feed : feeds) {
-				if(KeywordsFeed.class.isInstance(feed)) {
-					KeywordsFeed keywordFeed = (KeywordsFeed) feed;
-					keywordsList.addAll(keywordFeed.getKeywords());	
-				}
-				else if(AccountFeed.class.isInstance(feed)) {
-					AccountFeed accountFeed = (AccountFeed) feed;	
-					users.add(accountFeed.getUsername());
-				}
-				else if(LocationFeed.class.isInstance(feed)) {
-					double[] location = new double[2];
+			if(feeds != null) {
+				logger.info(feeds.size() + " feeds to track");
+				for(Feed feed : feeds) {
+					if(KeywordsFeed.class.isInstance(feed)) {
+						KeywordsFeed keywordFeed = (KeywordsFeed) feed;
+						keywordsList.addAll(keywordFeed.getKeywords());	
+					}
+					else if(AccountFeed.class.isInstance(feed)) {
+						AccountFeed accountFeed = (AccountFeed) feed;	
+						users.add(accountFeed.getUsername());
+					}
+					else if(LocationFeed.class.isInstance(feed)) {
+						double[] location = new double[2];
 					
-					location[0] = ((LocationFeed) feed).getLocation().getLatitude();
-					location[1] = ((LocationFeed) feed).getLocation().getLongitude();
-					locs.add(location);
+						location[0] = ((LocationFeed) feed).getLocation().getLatitude();
+						location[1] = ((LocationFeed) feed).getLocation().getLongitude();
+						locs.add(location);
+					}
 				}
 			}
 			
@@ -245,8 +247,8 @@ public class TwitterSubscriber extends Subscriber {
 							logger.info(queue.size() + " statuses in queue");
 						}
 						
-						if(queue.size() > 2000) {
-							logger.info("Twitter Queue size > 2000. Clear to prevent heapsize overflow.");
+						if(queue.size() > 5000) {
+							logger.info("Twitter Queue size > 5000. Clear to prevent heapsize overflow.");
 							queue.clear();
 						}
 					}
@@ -444,28 +446,6 @@ public class TwitterSubscriber extends Subscriber {
 				}
 			}
 		}
-		
-	}
-	
-	public static void main(String...args) throws Exception {
-		
-		Configuration config = new Configuration();
-		
-		config.setParameter(KEY, "UVWoIsZoP16ndCkEI2gOUNCWV");
-		config.setParameter(SECRET, "OckCuM5AynOXH0NsxpqQHNfBTfWPVp5BA20S8Xd8AtMzNy4OO3");
-		config.setParameter(ACCESS_TOKEN, "2547837110-IcVqpQiE764M6FPoYZ9oxwK6QhJGwwaTjX0syZm");
-		config.setParameter(ACCESS_TOKEN_SECRET, "wxQuDS6JODxBsZeIv8pHD4jYcVY3Ypsva6vbT7qjejpGA");
-	
-		Date since = new Date(System.currentTimeMillis() - 24*3600000);
-		KeywordsFeed feed = new KeywordsFeed("1", "left AND wing", since.getTime(), "Twitter");
-		
-		Set<Feed> feeds = new HashSet<Feed>();
-		feeds.add(feed);
-		
-		TwitterSubscriber sub = new TwitterSubscriber();
-		sub.open(config);
-		
-		sub.subscribe(feeds);
 		
 	}
 
