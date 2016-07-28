@@ -150,9 +150,10 @@ public class StreamsManager implements Runnable {
 				logger.error("There are no streams to open.");
 			}
 			
-			itemsMonitor.addFetchTasks(monitor.getStreamFetchTasks());
-			itemsMonitor.start();
-			
+			if(monitor != null) {
+				itemsMonitor.addFetchTasks(monitor.getStreamFetchTasks());
+				itemsMonitor.start();
+			}
 			
 			jedisPubSub = new RedisSubscriber(cQueue, itemsQueue, redisHost);
 			jedisPubSub.start();
@@ -470,7 +471,7 @@ public class StreamsManager implements Runnable {
 		}
 		logger.info(fIds.size() + " active feeds: " + fIds + ". Timestamp: " + new Date());
 		
-		if(monitor.getAllFeeds().size() != fIds.size()) {
+		if(monitor != null && monitor.getAllFeeds().size() != fIds.size()) {
 			logger.error("Number of feeds under monitoring (" + monitor.getAllFeeds().size() + ") differs from feeds associated with collections ("
 					+ fIds.size() + ").");
 			
@@ -496,7 +497,7 @@ public class StreamsManager implements Runnable {
 		Set<String> cIds = new HashSet<String>(storedRunningCollections.keySet());
 		cIds.removeAll(collectionsUnderMonitoring.keySet());
 		
-		logger.error("Monitoring check: " + cIds.size() + " collections are missing (" + cIds + "). Re-insert for monitoring.");
+		logger.info("Monitoring check: " + cIds.size() + " collections are missing (" + cIds + "). Re-insert for monitoring.");
 		for(String cId : cIds) {
 			try {
 				Collection collection = storedRunningCollections.get(cId);

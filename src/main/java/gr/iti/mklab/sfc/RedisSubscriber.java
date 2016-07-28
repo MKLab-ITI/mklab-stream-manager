@@ -61,7 +61,7 @@ public class RedisSubscriber extends JedisPubSub implements Runnable {
 			
 			try {
 				String r = jedis.ping();
-				logger.error("redis ping: " + r);
+				logger.info("redis ping: " + r);
 			}
 			catch(Exception e) {
 				logger.error("Redis exception", e);

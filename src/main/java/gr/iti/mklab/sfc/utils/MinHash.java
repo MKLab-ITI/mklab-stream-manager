@@ -122,7 +122,6 @@ public class MinHash {
     /**
      * Calculates MinHash value.
      * 
-     * @param analyzer analyzer to parse a text
      * @param text a target text
      * @return MinHash value
      * @throws IOException
