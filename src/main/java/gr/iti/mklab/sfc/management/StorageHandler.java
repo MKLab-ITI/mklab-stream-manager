@@ -269,7 +269,7 @@ public class StorageHandler implements Runnable {
 			}
 			
 			try {
-				Thread.sleep(300000);
+				Thread.sleep(600000);
 			} catch (InterruptedException e) {
 				logger.info("Thread interrupted.");
 			}
