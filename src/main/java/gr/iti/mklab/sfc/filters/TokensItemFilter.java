@@ -15,14 +15,14 @@ import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 
 public class TokensItemFilter  extends ItemFilter {
 
-	private int maxTokens;
+	private int minTokens;
 	
 	public TokensItemFilter(Configuration configuration) {
 		super(configuration);
-		String lenStr =configuration.getParameter("maxTokens", "6");
-		this.maxTokens  = Integer.parseInt(lenStr);
+		String lenStr =configuration.getParameter("minTokens", "6");
+		this.minTokens  = Integer.parseInt(lenStr);
 		
-		LogManager.getLogger(TokensItemFilter.class).info("Initialized. Max Number of Tokens: " + maxTokens);
+		LogManager.getLogger(TokensItemFilter.class).info("Initialized. Min Number of Tokens: " + minTokens);
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class TokensItemFilter  extends ItemFilter {
 			tokenizer.end();  
 			tokenizer.close();
 			
-			if(tokens.size() < maxTokens) {
+			if(tokens.size() < minTokens) {
 				incrementDiscarded();
 				return false;
 			}
