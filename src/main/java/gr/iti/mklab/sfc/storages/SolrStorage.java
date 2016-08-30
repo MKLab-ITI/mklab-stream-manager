@@ -96,7 +96,7 @@ public class SolrStorage implements Storage {
 		
 		if(solrItemHandler != null) {
 			ItemBean itemBean = new ItemBean(item);
-			boolean status = solrItemHandler.insert(itemBean);
+			boolean status = solrItemHandler.insertWithUpdateChain(itemBean);
 			if(status) {
 				indexedItems.incrementAndGet();
 			}
