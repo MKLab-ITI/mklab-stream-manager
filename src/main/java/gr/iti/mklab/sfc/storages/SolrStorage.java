@@ -37,6 +37,7 @@ public class SolrStorage implements Storage {
 	private static final String WEBPAGES_COLLECTION = "solr.webpages.collection";
 	
 	private static final String ONLY_ORIGINAL = "solr.onlyOriginal";
+	private static final String COMMIT_WITHIN = "solr.commitWithin";
 	
 	private String hostname, service;
 	
@@ -45,6 +46,7 @@ public class SolrStorage implements Storage {
 	private String webPagesCollection = null;
 	
 	private String storageName = "Solr";
+	private Integer commitWithinMs = 0;
 	
 	private SolrItemHandler solrItemHandler = null; 
 	private SolrMediaItemHandler solrMediaHandler = null;
@@ -62,6 +64,8 @@ public class SolrStorage implements Storage {
 		this.webPagesCollection = config.getParameter(SolrStorage.WEBPAGES_COLLECTION);
 	
 		this.onlyOriginal = Boolean.valueOf(config.getParameter(SolrStorage.ONLY_ORIGINAL));
+		this.commitWithinMs = Integer.valueOf(config.getParameter(SolrStorage.COMMIT_WITHIN));
+				
 	}
 	
 	@Override
@@ -69,14 +73,17 @@ public class SolrStorage implements Storage {
 		try {
 			if(itemsCollection != null) {
 				solrItemHandler = SolrItemHandler.getInstance(hostname + "/" + service + "/" + itemsCollection);
+				solrItemHandler.setCommitWithinMs(commitWithinMs);
 			}
 			
 			if(mediaItemsCollection != null) {	
 				solrMediaHandler = SolrMediaItemHandler.getInstance(hostname + "/" + service+"/" + mediaItemsCollection);
+				solrMediaHandler.setCommitWithinMs(commitWithinMs);
 			}
 			
 			if(webPagesCollection != null) {	
 				solrWebPageHandler = SolrWebPageHandler.getInstance(hostname + "/" + service + "/" + webPagesCollection);
+				solrWebPageHandler.setCommitWithinMs(commitWithinMs);
 			}
 			
 		} catch (Exception e) {
@@ -97,6 +104,7 @@ public class SolrStorage implements Storage {
 		if(solrItemHandler != null) {
 			ItemBean itemBean = new ItemBean(item);
 			boolean status = solrItemHandler.insertWithUpdateChain(itemBean);
+
 			if(status) {
 				indexedItems.incrementAndGet();
 			}
