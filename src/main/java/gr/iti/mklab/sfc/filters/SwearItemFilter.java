@@ -27,7 +27,7 @@ public class SwearItemFilter extends ItemFilter {
 	    		"cock","cocksuck","cocksucker","cocksucking","cockface","cockhead","cockmunch","c0cksucker",
 	    		"coon","crap","cum","cumshot","cummer","cunt","cuntlick","cuntlicking","damn","dick","dlck","dildo","dyke","ejaculate","ejaculation",
 	    		"fag","faggot","feck","fellate","fellatio","felching","fingerfuck","fistfuck","fuck","fuckme","fudgepacker","flange",
-	    		"gangbang","goddamn","handjob","homo","horny","jerk","jizz","knobend","labia","lmao","lmfao","muff","nigger","nigga","niggah","penis","pigfucker","piss","poop",
+	    		"gangbang","goddamn","handjob","homo","horny","jerk","jizz","knobend","labia","lmao","lmfao","muff","nigger","nigga","niggah","porn", "penis","pigfucker","piss","poop",
 	    		"prick","pube","pussy","queer","scrotum","sexxx","shemale","shit","sh1t","shitdick","shiting","shitter","slut","smegma","spunk","tit","titfuck","tittywank","tosser",
 	    		"turd","twat","vagina","vulva","wank","wanker","whore","wtf","xxx");
 
