@@ -15,7 +15,8 @@ public class TextUtils {
 	public static String clean(String text) {
 		
 		String resultString = Normalizer.normalize(text, Normalizer.Form.NFD);
-		resultString = resultString.replaceAll("[^\\x00-\\x7F]", "");
+		//resultString = resultString.replaceAll("[^\\x00-\\x7F]", "");
+		resultString = resultString.replaceAll("\\p{Cntrl}", "");
 		resultString = resultString.replaceAll("\\n", " ");
 		resultString = resultString.replaceAll("\\.{2,}", ". ");
 		
