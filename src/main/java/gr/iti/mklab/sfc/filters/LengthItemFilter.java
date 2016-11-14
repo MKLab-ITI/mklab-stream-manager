@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 public class LengthItemFilter extends ItemFilter {
 
 	private Integer minTextLenth = 15;
+	private Integer maxTextLenth = 2000;
 	
 	public LengthItemFilter(Configuration configuration) {
 		super(configuration);
@@ -62,7 +63,13 @@ public class LengthItemFilter extends ItemFilter {
 			
 		}
 		
-		if(title.length() < minTextLenth) {
+		if(title.length() < minTextLenth || title.length() > maxTextLenth) {
+			incrementDiscarded();
+			return false;
+		}
+		
+		String description = item.getDescription();
+		if(description != null && description.length() > maxTextLenth) {
 			incrementDiscarded();
 			return false;
 		}
