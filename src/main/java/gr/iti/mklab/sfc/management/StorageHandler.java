@@ -160,8 +160,9 @@ public class StorageHandler implements Runnable {
 				storageInstance = (Storage) constructor.newInstance(storageConfig);
 					
 				storages.add(storageInstance);
+				logger.info(storageId + " initialized. Class: " + storageClass);
 			} catch (Exception e) {
-				logger.error(e);
+				logger.error("Exception during " + storageId + " storage initialization: " + e.getMessage(), e);
 				continue;
 			}	
 				
@@ -175,9 +176,13 @@ public class StorageHandler implements Runnable {
 					workingStatuses.put(storageId, false);	
 				}
 			} catch (Exception e) {
-				logger.error("Error during " + storageId + " storage initialization", e);
+				logger.error("Error during " + storageId + " storage initialization: " + e.getMessage(), e);
 				workingStatuses.put(storageId, false);	
 			}
+		}
+		
+		if(workingStatuses.size() != storages.size()) {
+			logger.error("Error: storages size differs from workingStatuses size.");
 		}
 	}
 	
@@ -245,10 +250,11 @@ public class StorageHandler implements Runnable {
 			logger.info(handled.get() + " items handled in total.");
 			logger.info(queue.size() + " items are queued for processing.");
 			
-			if(queue.size() > 1000000) {
+			if(queue.size() > 500000) {
 				queue.clear();
 			}
 			
+			logger.info(storages.size() + "storages initialized. " + workingStatuses.size() + " storages under monitoring.");
 			for(Storage storage : storages) {
 				try {
 					boolean workingStatus = storage.checkStatus();
@@ -257,6 +263,7 @@ public class StorageHandler implements Runnable {
 					logger.info(storage.getStorageName() + " working status: " + workingStatus);
 					
 					if(!workingStatus) {
+						logger.info(storage.getStorageName() + " is not working. Close and re-open.");
 						storage.close();
 						
 						boolean status = storage.open();
