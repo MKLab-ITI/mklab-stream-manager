@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.atomic.AtomicLong;
@@ -98,6 +99,9 @@ public class StorageHandler implements Runnable {
 
 	public void handle(Item item) {
 		try {
+			
+			waitStoragesToInitialize();
+			
 			handled.incrementAndGet();
 			queue.add(item);
 		}
@@ -146,15 +150,22 @@ public class StorageHandler implements Runnable {
 	 */
 	private void initializeStorageHandler(StreamsManagerConfiguration config) throws StreamException {
 		for (String storageId : config.getStorageIds()) {
-			Configuration storageConfig = config.getStorageConfig(storageId);
+		
+			Storage storageInstance = null;
 			try {
 				logger.info("Initialize " + storageId);
+				Configuration storageConfig = config.getStorageConfig(storageId);
 				String storageClass = storageConfig.getParameter(Configuration.CLASS_PATH);
 				Constructor<?> constructor = Class.forName(storageClass).getConstructor(Configuration.class);
-				Storage storageInstance = (Storage) constructor.newInstance(storageConfig);
-				
+				storageInstance = (Storage) constructor.newInstance(storageConfig);
+					
 				storages.add(storageInstance);
+			} catch (Exception e) {
+				logger.error(e);
+				continue;
+			}	
 				
+			try {
 				if(storageInstance.open()) {
 					logger.info("Storage " + storageId + " is working.");
 					workingStatuses.put(storageId, true);
@@ -163,11 +174,9 @@ public class StorageHandler implements Runnable {
 					logger.error("Storage " + storageId + " is not working.");
 					workingStatuses.put(storageId, false);	
 				}
-				
 			} catch (Exception e) {
-				StreamException ex = new StreamException("Error during storage initialization", e);
-				logger.error(ex);
-				throw ex;
+				logger.error("Error during " + storageId + " storage initialization", e);
+				workingStatuses.put(storageId, false);	
 			}
 		}
 	}
@@ -273,9 +282,28 @@ public class StorageHandler implements Runnable {
 			} catch (InterruptedException e) {
 				logger.info("Thread interrupted.");
 			}
-			
 		}
-		
-		
 	}
+	
+	private void waitStoragesToInitialize() {
+		while(true) {
+			boolean shouldContinue = true; 
+			for(Entry<String, Boolean> ws : workingStatuses.entrySet()) {
+				shouldContinue = shouldContinue && ws.getValue();
+			}
+			
+			if(shouldContinue) {
+				break;
+			}
+			else {
+				try {
+					logger.info("Wait as not all storages were initialized properly.");
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					logger.info(e);
+				}
+			}
+		}
+	}
+	
 }
