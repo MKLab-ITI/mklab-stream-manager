@@ -254,9 +254,10 @@ public class StorageHandler implements Runnable {
 				queue.clear();
 			}
 			
-			logger.info(storages.size() + "storages initialized. " + workingStatuses.size() + " storages under monitoring.");
+			logger.info(storages.size() + " storages initialized. " + workingStatuses.size() + " storages under monitoring.");
 			for(Storage storage : storages) {
 				try {
+					logger.info("Check " + storage.getStorageName() + " status.");
 					boolean workingStatus = storage.checkStatus();
 					
 					workingStatuses.put(storage.getStorageName(), workingStatus);
