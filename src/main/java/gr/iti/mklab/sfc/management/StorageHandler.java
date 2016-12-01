@@ -12,6 +12,7 @@ import java.util.concurrent.LinkedBlockingDeque;
 import java.util.concurrent.atomic.AtomicLong;
 
 import org.apache.logging.log4j.Logger;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 
 import gr.iti.mklab.framework.common.domain.config.Configuration;
@@ -296,8 +297,12 @@ public class StorageHandler implements Runnable {
 	private void waitStoragesToInitialize() {
 		while(true) {
 			boolean shouldContinue = true; 
+			List<String> notWorking = new ArrayList<String>();
 			for(Entry<String, Boolean> ws : workingStatuses.entrySet()) {
 				shouldContinue = shouldContinue && ws.getValue();
+				if(!ws.getValue()) {
+					notWorking.add(ws.getKey());
+				}
 			}
 			
 			if(shouldContinue) {
@@ -305,8 +310,9 @@ public class StorageHandler implements Runnable {
 			}
 			else {
 				try {
-					logger.info("Wait as not all storages were initialized properly.");
-					Thread.sleep(5000);
+					logger.info("Wait as not all storages were initialized properly: " + 
+							StringUtils.join(notWorking, ", "));
+					Thread.sleep(60000);
 				} catch (InterruptedException e) {
 					logger.info(e);
 				}
