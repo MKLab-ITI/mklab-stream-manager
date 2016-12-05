@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.core.LowerCaseFilter;
 import org.apache.lucene.analysis.core.WhitespaceTokenizer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 
@@ -47,19 +48,20 @@ public class SwearItemFilter extends ItemFilter {
 		
 			Reader reader = new StringReader(title);
 			TokenStream tokenizer = new WhitespaceTokenizer(reader);
+			TokenStream stream = new LowerCaseFilter(tokenizer);
 			
 			List<String> tokens = new ArrayList<String>();
-			CharTermAttribute charTermAtt = tokenizer.addAttribute(CharTermAttribute.class);
-			tokenizer.reset();
-			while (tokenizer.incrementToken()) {
+			CharTermAttribute charTermAtt = stream.addAttribute(CharTermAttribute.class);
+			stream.reset();
+			while (stream.incrementToken()) {
 				String token = charTermAtt.toString();
 				if(token.contains("http") || token.contains(".") || token.length() <= 1) {
 					continue;
 				}
 				tokens.add(token);
 			}
-			tokenizer.end();  
-			tokenizer.close();
+			stream.end();  
+			stream.close();
 			
 			for(String token : tokens) {
 				if(swearwords.contains(token)) {
