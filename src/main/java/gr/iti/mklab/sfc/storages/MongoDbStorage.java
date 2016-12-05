@@ -118,7 +118,7 @@ public class MongoDbStorage implements Storage {
 			
 			boolean itemExists = false;
 			synchronized(itemsMap) {
-				Query<Item> q = itemDAO.createQuery().filter("id", itemId);
+				Query<Item> q = itemDAO.createQuery().filter("_id", itemId);
 				itemExists = itemsMap.containsKey(itemId) || itemDAO.exists(q);
 			}
 			
@@ -224,7 +224,8 @@ public class MongoDbStorage implements Storage {
 			
 				boolean mediaExists = false;
 				synchronized(mediaItemsSharesMap) {
-					mediaExists = mediaItemsSharesMap.containsKey(mediaItemId) || mediaItemDAO.exists(mediaItemDAO.createQuery().filter("id", mediaItemId));
+					Query<MediaItem> q = mediaItemDAO.createQuery().filter("_id", mediaItemId);
+					mediaExists = mediaItemsSharesMap.containsKey(mediaItemId) || mediaItemDAO.exists(q);
 				}
 			
 				if(!mediaExists) {	
@@ -258,7 +259,8 @@ public class MongoDbStorage implements Storage {
 				
 				boolean wpExists = false;
 				synchronized(webpagesSharesMap) {
-					wpExists = webpagesSharesMap.containsKey(webPageURL) || webPageDAO.exists(webPageDAO.createQuery().filter("url", webPageURL));
+					Query<WebPage> q = webPageDAO.createQuery().filter("_id", webPageURL);
+					wpExists = webpagesSharesMap.containsKey(webPageURL) || webPageDAO.exists(q);
 				}
 				
 				if(!wpExists) {
