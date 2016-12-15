@@ -359,7 +359,7 @@ public class TwitterSubscriber extends Subscriber {
 		String oAuthAccessTokenSecret 	= 	config.getParameter(ACCESS_TOKEN_SECRET);
 		
 		String accessLevel = config.getParameter("AccessLevel");
-		if(accessLevel != null && accessLevel.equals("public")) {
+		if(accessLevel == null || (accessLevel != null && accessLevel.equals("public"))) {
 			this.accessLevel = AccessLevel.PUBLIC;
 		}
 		
@@ -381,10 +381,11 @@ public class TwitterSubscriber extends Subscriber {
 			.setOAuthConsumerSecret(oAuthConsumerSecret)
 			.setOAuthAccessToken(oAuthAccessToken)
 			.setOAuthAccessTokenSecret(oAuthAccessTokenSecret);
+		
 		twitter4j.conf.Configuration conf = cb.build();
 		
 		this.executorService = Executors.newFixedThreadPool(numberOfConsumers);
-		for(int i=0; i<numberOfConsumers; i++) {
+		for(int i = 0; i < numberOfConsumers; i++) {
 			TwitterStreamConsumer consumer = new TwitterStreamConsumer();
 			streamConsumers.add(consumer);
 			
