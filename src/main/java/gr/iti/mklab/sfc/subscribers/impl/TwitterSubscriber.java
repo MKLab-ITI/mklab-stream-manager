@@ -103,7 +103,6 @@ public class TwitterSubscriber extends Subscriber {
 			throw new StreamException("Stream is closed", null);
 		} 
 		else {
-			
 			List<String> keywordsList = new ArrayList<String>();
 			Set<String> users = new HashSet<String>();
 			Set<Long> userids = new HashSet<Long>();
@@ -171,6 +170,7 @@ public class TwitterSubscriber extends Subscriber {
 			}
 			else {
 				logger.info("Start sampling from twitter stream");
+				twitterStream.shutdown();
 				twitterStream.sample();
 			}
 		}

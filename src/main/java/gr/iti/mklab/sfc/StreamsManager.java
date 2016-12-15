@@ -58,7 +58,7 @@ public class StreamsManager implements Runnable {
 	
 	private ManagerState state = ManagerState.CLOSE;
 
-	private BlockingQueue<Pair<Collection, String>> cQueue = new LinkedBlockingQueue<Pair<Collection, String>>();
+	private BlockingQueue<Pair<Collection, String>> collectionsQueue = new LinkedBlockingQueue<Pair<Collection, String>>();
 	private BlockingQueue<Pair<Pair<String, String>, String>> itemsQueue = new LinkedBlockingQueue<Pair<Pair<String, String>, String>>();
 	
 	private CollectionsManager collectionsManager;
@@ -117,17 +117,19 @@ public class StreamsManager implements Runnable {
 			collectionsManager = new CollectionsManager(inputConfig);
 			
 			//Start the Subscribers
-			Map<String, Set<Feed>> feedsPerSource =  collectionsManager.createFeedsPerSource();
-			for(String subscriberId : subscribers.keySet()) {
-				logger.info("Stream Manager - Start Subscriber : " + subscriberId);
-				Configuration srconfig = config.getSubscriberConfig(subscriberId);
-				Subscriber subscriber = subscribers.get(subscriberId);
+			if(subscribers != null) {
+				Map<String, Set<Feed>> feedsPerSource =  collectionsManager.createFeedsPerSource();
+				for(String subscriberId : subscribers.keySet()) {
+					logger.info("Stream Manager - Start Subscriber : " + subscriberId);
+					Configuration srconfig = config.getSubscriberConfig(subscriberId);
+					Subscriber subscriber = subscribers.get(subscriberId);
 				
-				subscriber.setHandler(storageHandler);
-				subscriber.open(srconfig);
+					subscriber.setHandler(storageHandler);
+					subscriber.open(srconfig);
 				
-				Set<Feed> sourceFeed = feedsPerSource.get(subscriberId);
-				subscriber.subscribe(sourceFeed);
+					Set<Feed> sourceFeed = feedsPerSource.get(subscriberId);
+					subscriber.subscribe(sourceFeed);
+				}
 			}
 			
 			//Start the Streams
@@ -155,7 +157,7 @@ public class StreamsManager implements Runnable {
 				itemsMonitor.start();
 			}
 			
-			jedisPubSub = new RedisSubscriber(cQueue, itemsQueue, redisHost);
+			jedisPubSub = new RedisSubscriber(collectionsQueue, itemsQueue, redisHost);
 			jedisPubSub.start();
 		}
 		catch(Exception e) {
@@ -250,7 +252,7 @@ public class StreamsManager implements Runnable {
 		for(Collection collection : collections.values()) {
 			try {
 				if(!collectionsUnderMonitoring.containsKey(collection.getId())) {
-					cQueue.put(Pair.of(collection, "collections:new"));
+					collectionsQueue.put(Pair.of(collection, "collections:new"));
 				}
 			} catch (InterruptedException e) {
 				logger.error(e);
@@ -261,7 +263,7 @@ public class StreamsManager implements Runnable {
 		while(state == ManagerState.OPEN) {
 			try {
 				
-				Pair<Collection, String> actionPair = cQueue.take();
+				Pair<Collection, String> actionPair = collectionsQueue.take();
 				if(actionPair == null) {
 					logger.error("Received action pair is null.");
 					continue;
@@ -316,7 +318,7 @@ public class StreamsManager implements Runnable {
     					
     					if(!collectionsUnderMonitoring.containsKey(cId)) {
     						logger.error("Collection " + cId + " is not under monitoring. Cannot update.");	
-    						cQueue.add(Pair.of(collection, "collections:new"));
+    						collectionsQueue.add(Pair.of(collection, "collections:new"));
     						
     						continue;
     					}
@@ -501,7 +503,7 @@ public class StreamsManager implements Runnable {
 		for(String cId : cIds) {
 			try {
 				Collection collection = storedRunningCollections.get(cId);
-				cQueue.put(Pair.of(collection, "collections:new"));
+				collectionsQueue.put(Pair.of(collection, "collections:new"));
 			} catch (InterruptedException e) {
 				logger.error(e);
 			}
@@ -515,7 +517,7 @@ public class StreamsManager implements Runnable {
 		for(String cId : cIds) {
 			try {
 				Collection collection = collectionsUnderMonitoring.get(cId);
-				cQueue.put(Pair.of(collection, "collections:delete"));
+				collectionsQueue.put(Pair.of(collection, "collections:delete"));
 			} catch (InterruptedException e) {
 				logger.error(e);
 			}
