@@ -23,17 +23,16 @@ public class SwearItemFilter extends ItemFilter {
 	public SwearItemFilter(Configuration configuration) {
 		super(configuration);
 		
-	    List<String> swearWords = Arrays.asList("anal","anus","arse","ar5e","ass","assfucker","assfukka","asshole",
+	    List<String> swearWords = Arrays.asList("anal","anus","arse","ar5e","ass","assfucker","assfukka","asshole","assfuck",
 	    		"ballsack","balls","bastard","bitch","biatch","bigtits","blowjob","bollock","bollok","boner","boob","bugger","bum","butt","buttplug","clitoris",
-	    		"cock","cocksuck","cocksucker","cocksucking","cockface","cockhead","cockmunch","c0cksucker",
+	    		"cock","cocksuck","cocksucker","cocksucking","cockface","cockhead","cockmunch","c0cksucker","czechporn",
 	    		"coon","crap","cum","cumshot","cummer","cunt","cuntlick","cuntlicking","damn","dick","dlck","dildo","dyke","ejaculate","ejaculation",
 	    		"fag","faggot","feck","fellate","fellatio","felching","fingerfuck","fistfuck","fuck","fuckme","fudgepacker","flange",
 	    		"gangbang","goddamn","handjob","homo","horny","jerk","jizz","knobend","labia","lmao","lmfao","muff","nigger","nigga","niggah","porn", "penis","pigfucker","piss","poop",
 	    		"prick","pube","pussy","queer","scrotum","sexxx","shemale","shit","sh1t","shitdick","shiting","shitter","slut","smegma","spunk","tit","titfuck","tittywank","tosser",
-	    		"turd","twat","vagina","vulva","wank","wanker","whore","wtf","xxx");
-
+	    		"teensporn","teensfuck","turd","twat","vagina","vulva","wank","wanker","whore","wtf","xxx");
+	    
 		swearwords.addAll(swearWords);
-		
 	}
 	
 	@Override
@@ -46,6 +45,10 @@ public class SwearItemFilter extends ItemFilter {
 				return false;
 			}
 		
+			title = title.replaceAll("\"", " ");
+			title = title.replaceAll("'", " ");
+			title = title.replaceAll(".", " ");
+			
 			Reader reader = new StringReader(title);
 			TokenStream tokenizer = new WhitespaceTokenizer(reader);
 			TokenStream stream = new LowerCaseFilter(tokenizer);
@@ -55,8 +58,11 @@ public class SwearItemFilter extends ItemFilter {
 			stream.reset();
 			while (stream.incrementToken()) {
 				String token = charTermAtt.toString();
-				if(token.contains("http") || token.contains(".") || token.length() <= 1) {
+				if(token.contains("http") || token.contains("https") || token.length() <= 1) {
 					continue;
+				}
+				if(token.contains("#")) {
+					token = token.replaceAll("#", "");
 				}
 				tokens.add(token);
 			}

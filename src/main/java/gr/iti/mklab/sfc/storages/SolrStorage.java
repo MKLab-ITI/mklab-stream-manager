@@ -46,7 +46,7 @@ public class SolrStorage implements Storage {
 	private String webPagesCollection = null;
 	
 	private String storageName = "Solr";
-	private Integer commitWithinMs = 0;
+	private Integer commitWithinMs = 60000;
 	
 	private SolrItemHandler solrItemHandler = null; 
 	private SolrMediaItemHandler solrMediaHandler = null;
@@ -104,7 +104,6 @@ public class SolrStorage implements Storage {
 		if(solrItemHandler != null) {
 			ItemBean itemBean = new ItemBean(item);
 			boolean status = solrItemHandler.insertWithUpdateChain(itemBean);
-
 			if(status) {
 				indexedItems.incrementAndGet();
 			}
@@ -137,7 +136,6 @@ public class SolrStorage implements Storage {
 	
 	@Override
 	public boolean delete(String itemId) throws IOException {
-		logger.info("Delete item with id " + itemId + " from Solr.");
 		solrItemHandler.delete(itemId);
 		return true;
 	}
