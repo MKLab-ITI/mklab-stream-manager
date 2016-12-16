@@ -46,7 +46,7 @@ public class SolrStorage implements Storage {
 	private String webPagesCollection = null;
 	
 	private String storageName = "Solr";
-	private Integer commitWithinMs = 60000;
+	private Integer commitWithinMs = 0;
 	
 	private SolrItemHandler solrItemHandler = null; 
 	private SolrMediaItemHandler solrMediaHandler = null;
@@ -64,7 +64,9 @@ public class SolrStorage implements Storage {
 		this.webPagesCollection = config.getParameter(SolrStorage.WEBPAGES_COLLECTION);
 	
 		this.onlyOriginal = Boolean.valueOf(config.getParameter(SolrStorage.ONLY_ORIGINAL));
-		this.commitWithinMs = Integer.valueOf(config.getParameter(SolrStorage.COMMIT_WITHIN));
+		if(config.getParameter(SolrStorage.COMMIT_WITHIN) != null) {
+			this.commitWithinMs = Integer.valueOf(config.getParameter(SolrStorage.COMMIT_WITHIN));
+		}
 				
 	}
 	
