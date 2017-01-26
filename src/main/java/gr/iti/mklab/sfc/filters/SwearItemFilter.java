@@ -88,7 +88,7 @@ public class SwearItemFilter extends ItemFilter {
 
 	@Override
 	public String name() {
-		return null;
+		return "SwearItemFilter";
 	}
 
 }

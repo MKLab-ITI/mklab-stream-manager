@@ -310,8 +310,7 @@ public class StorageHandler implements Runnable {
 			}
 			else {
 				try {
-					logger.info("Wait as not all storages were initialized properly: " + 
-							StringUtils.join(notWorking, ", "));
+					logger.info("Wait as not all storages were initialized properly: " + StringUtils.join(notWorking, ", "));
 					Thread.sleep(60000);
 				} catch (InterruptedException e) {
 					logger.info(e);

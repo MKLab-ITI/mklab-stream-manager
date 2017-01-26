@@ -2,6 +2,7 @@ package gr.iti.mklab.sfc.streams.monitors;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -48,7 +49,9 @@ public class StreamFetchTask implements  Callable<Integer>, Runnable {
 	private Map<String, Pair<Long, Integer>> itemsToMonitor = Collections.synchronizedMap(new HashMap<String, Pair<Long, Integer>>());
 	
 	private int maxRequests;
-	private long period;
+	private long timeWindow;
+	
+	private long executionPeriod = 30 * 60000l; // execute each feed every 30 minutes 
 	
 	private long totalRetrievedItems = 0L;
 
@@ -64,7 +67,7 @@ public class StreamFetchTask implements  Callable<Integer>, Runnable {
 		this.stream = stream;
 		
 		this.maxRequests = stream.getMaxRequests();
-		this.period = stream.getTimeWindow() * 60000l;	
+		this.timeWindow = stream.getTimeWindow() * 60000l;	
 	}
 	
 	public void addFeed(Feed feed) {
@@ -88,7 +91,7 @@ public class StreamFetchTask implements  Callable<Integer>, Runnable {
 			logger.info("Add item with id: " + id + " for extensive monitoring.");
 			
 			int p = rand.nextInt(4);
-			long timeToBeChecked = System.currentTimeMillis() + (p+1)*period;
+			long timeToBeChecked = System.currentTimeMillis() + (p+1) * executionPeriod;
 			
 			Pair<Long, Integer> value = Pair.of(timeToBeChecked, 1);
 			itemsToMonitor.put(id, value);
@@ -147,17 +150,44 @@ public class StreamFetchTask implements  Callable<Integer>, Runnable {
 	}
 	
 	public List<Feed> getFeedsToPoll() {
-		List<Feed> feedsToPoll = new ArrayList<Feed>();
+		List<FeedFetch> fetchTasks = new ArrayList<FeedFetch>();
 		long currentTime = System.currentTimeMillis();
-		// Check for new feeds
+		
+		// Check for feeds not executed in the last period
 		for(FeedFetch feedFetch : feeds.values()) {
 			// each feed can run one time in each period
-			if((currentTime - feedFetch.getLastExecution()) > period) { 
-				feedsToPoll.add(feedFetch.getFeed());
+			if((currentTime - feedFetch.getLastExecutionTime()) > executionPeriod) { 
+				fetchTasks.add(feedFetch);
 			}
 		}
 		
+		sortFeeds(fetchTasks);
+		
+		List<Feed> feedsToPoll = new ArrayList<Feed>();
+		for(FeedFetch ff : fetchTasks) {
+			feedsToPoll.add(ff.getFeed());
+		}
 		return feedsToPoll;
+	}
+	
+	private void sortFeeds(List<FeedFetch> fetchTasks) {
+		// sort by execution time - 
+		Collections.sort(fetchTasks, new Comparator<FeedFetch>() {
+			@Override
+			public int compare(FeedFetch ff1, FeedFetch ff2) {
+				long lastExecutionTime1 = executionPeriod * (ff1.getLastExecutionTime() / executionPeriod);
+				long lastExecutionTime2 = executionPeriod * (ff2.getLastExecutionTime() / executionPeriod);
+				
+				if(lastExecutionTime1 == lastExecutionTime2) {
+					if(ff1.getItemsPerSecond() == ff2.getItemsPerSecond())
+						return 0;
+					
+					return ff1.getItemsPerSecond() < ff2.getItemsPerSecond() ? 1 : -1;
+				}
+				
+				return lastExecutionTime1 < lastExecutionTime2 ? 1 : -1;
+			}	
+		});
 	}
 	
 	public Set<String> getFeeds() {
@@ -173,7 +203,7 @@ public class StreamFetchTask implements  Callable<Integer>, Runnable {
 		int totalItems = 0;
 		try {
 			long currentTime = System.currentTimeMillis();
-			if((currentTime -  lastResetTime) > period) {
+			if((currentTime -  lastResetTime) > executionPeriod) {
 				logger.info("Reset available requests for " + stream.getName());
 				
 				requests.set(0);	// reset performed requests
@@ -207,7 +237,7 @@ public class StreamFetchTask implements  Callable<Integer>, Runnable {
 					
 					FeedFetch feedFetch = feeds.get(feed.getId());
 					if(feedFetch != null) {
-						feedFetch.setLastExecution(executionTime);
+						feedFetch.setLastExecutionTime(executionTime);
 						feedFetch.incFetchedItems(response.getNumberOfItems());
 						
 						feed.setUntilDate(executionTime);
@@ -235,7 +265,7 @@ public class StreamFetchTask implements  Callable<Integer>, Runnable {
 		while(running) {
 			try {
 				long currentTime = System.currentTimeMillis();
-				if((currentTime -  lastResetTime) > period) {
+				if((currentTime -  lastResetTime) > timeWindow) {
 					logger.info((maxRequests - requests.get()) + " available requests for " + stream.getName() + ". Reset them to " + maxRequests);
 					
 					requests.set(0);	// reset performed requests
@@ -252,7 +282,7 @@ public class StreamFetchTask implements  Callable<Integer>, Runnable {
 						
 						int availableRequests = maxRequests - requests.get();
 						if(availableRequests <= 1) {
-							long waitingTime = (period - (currentTime -  lastResetTime));
+							long waitingTime = (timeWindow - (currentTime -  lastResetTime));
 							if(waitingTime > 0) {	
 								logger.info("No more remaining requests for " + stream.getName() + ". "
 										+ feedsToPoll + " feeds are ready for polling but must wait for " + (waitingTime / 1000) 
@@ -282,10 +312,20 @@ public class StreamFetchTask implements  Callable<Integer>, Runnable {
 							
 							FeedFetch feedFetch = feeds.get(feed.getId());
 							if(feedFetch != null) {
-								feedFetch.setLastExecution(lastExecutionTime);
+								if(feedFetch.getFirstExecutionTime() == null) {
+									logger.info("Feed " + feed.getId() + " executed after " + ((lastExecutionTime - feedFetch.getInitializationTime())/1000) + " seconds");
+									feedFetch.setFirstExecutionTime(lastExecutionTime);
+								}
+								
+								feedFetch.incExecutions();
+								feedFetch.setLastExecutionTime(lastExecutionTime);
 								feedFetch.incFetchedItems(response.getNumberOfItems());
+								
+								logger.info("Feed " + feed.getId() + " executed " + feedFetch.getExecutions() + " times. " + 
+										feedFetch.getFetchedItems() + " items fetched. FetchRate: " + feedFetch.getItemsPerSecond());
 							}
 							else {
+								// cannot happen normally
 								logger.error("There is no fetch structure for feed (" + feed.getId() + ")");
 							}
 						}
@@ -347,7 +387,7 @@ public class StreamFetchTask implements  Callable<Integer>, Runnable {
 					itemStates.add(itemState);
 					
 					int p = rand.nextInt(4);
-					long timeToBeChecked = System.currentTimeMillis() + (p+1)*period;
+					long timeToBeChecked = System.currentTimeMillis() + (p+1) * executionPeriod;
 					
 					Pair<Long, Integer> value = itemsToMonitor.get(id);
 					
@@ -364,46 +404,6 @@ public class StreamFetchTask implements  Callable<Integer>, Runnable {
 		}
 		
 		return itemStates;
-	}
-	
-	public class FeedFetch {
-		
-		private Feed feed;
-		private Long lastExecution = 0L;
-		
-		private Long fetchedItems = 0L;
-		
-		public FeedFetch(Feed feed) {
-			this.feed = feed;
-		}
-
-		public Long getLastExecution() {
-			return lastExecution;
-		}
-
-		public void setLastExecution(Long lastExecution) {
-			this.lastExecution = lastExecution;
-		}
-
-		public Feed getFeed() {
-			return feed;
-		}
-
-		public void setFeed(Feed feed) {
-			this.feed = feed;
-		}
-
-		public Long getFetchedItems() {
-			return fetchedItems;
-		}
-
-		public void setFetchedItems(Long fetchedItems) {
-			this.fetchedItems = fetchedItems;
-		}
-		
-		public void incFetchedItems(Integer fetchedItems) {
-			this.fetchedItems += fetchedItems;
-		}
 	}
 	
 }
