@@ -6,6 +6,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
@@ -44,8 +46,22 @@ public class CollectionsManager {
 	public CollectionsManager(Configuration config) throws Exception {
 		this.host = config.getParameter(HOST);
 		this.db = config.getParameter(DB);
+		
+		Pattern pattern = Pattern.compile("(\\Q${\\E)(.*)(\\Q}\\E)");
+		
 		this.username = config.getParameter(USERNAME);
+		Matcher matcher = pattern.matcher(username);
+		if(username != null && matcher.find()) {
+			username = matcher.group(2);
+			username = System.getProperty(username);
+		}
+		
 		this.password = config.getParameter(PWD);
+		matcher = pattern.matcher(password);
+		if(password != null && matcher.find()) {
+			password = matcher.group(2);
+			password = System.getProperty(password);
+		}
 		
 		connect();
 	}
