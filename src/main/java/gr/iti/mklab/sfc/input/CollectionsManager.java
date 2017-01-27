@@ -68,6 +68,8 @@ public class CollectionsManager {
 	
 	public void connect() {
 		try {
+			logger.info("Connect to mongodb <host: " + host + ", database: " + db + ", username: " + username +", password: " + password + ">");
+			
 			DAOFactory daoFactory = new DAOFactory();
 			
 			if(username != null && password != null) {

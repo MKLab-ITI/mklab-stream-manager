@@ -105,7 +105,8 @@ public class MongoDbStorage implements Storage {
 	@Override
 	public boolean open() {
 		
-		logger.info("Open MongoDB storage <host: " + host + ">");
+		logger.info("Open MongoDB storage <host: " + host + ", database: " + database + ", username: " + username +", password: " + password + ">");
+		
 		DAOFactory daoFactory = new DAOFactory();
 		if(database != null) {
 			try {
