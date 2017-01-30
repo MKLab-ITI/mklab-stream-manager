@@ -61,7 +61,7 @@ public class FeedFetch {
 	
 	public void incFetchedItems(Integer lastFetchedItems) {
 		this.lastFetchedItems = lastFetchedItems;
-		this.fetchedItems += fetchedItems;
+		this.fetchedItems += lastFetchedItems;
 	}
 	
 	public double getItemsPerSecond() {

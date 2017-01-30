@@ -381,6 +381,8 @@ public class StreamsManager implements Runnable {
 					// Add to monitors
 					logger.info("Add " + feed + " to " + streamId);
 					collections = new HashSet<String>();
+					collections.add(collection.getId());
+					
 					feeds.put(feed, collections);
 					monitor.addFeed(streamId, feed);
 				}
