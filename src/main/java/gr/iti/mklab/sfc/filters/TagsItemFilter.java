@@ -27,9 +27,9 @@ public class TagsItemFilter extends ItemFilter {
 		String lenStr =configuration.getParameter("maxTags", "4");
 		this.maxTags  = Integer.parseInt(lenStr);
 		
-		String sources = configuration.getParameter("sources");
-		if(sources != null && !sources.equals("")) {
-			String[] parts = sources.split(",");
+		String sourcesList = configuration.getParameter("sources");
+		if(sourcesList != null && !sourcesList.equals("")) {
+			String[] parts = sourcesList.split(",");
 			sourcesToInclude.addAll(Arrays.asList(parts));
 		}
 		
