@@ -11,12 +11,6 @@
     <description> Monitors a set of social streams (e.g. Twitter status updates) and collects the incoming content.
     </description>
     
-  	<parent>
-        <groupId>org.sonatype.oss</groupId>
-        <artifactId>oss-parent</artifactId>
-        <version>7</version>
-    </parent>
-    
   	<developers>
         <developer>
             <id>manosetro</id>
@@ -38,7 +32,7 @@
         <developerConnection>scm:git:git@github.com:MKLab-ITI/mklab-stream-manager.git</developerConnection>
         <url>git@github.com:MKLab-ITI/mklab-stream-manager.git</url>
       <tag>HEAD</tag>
-  </scm>
+  	</scm>
     
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -187,6 +181,14 @@
     
     <pluginRepositories />
     
+    <distributionManagement>
+  		<snapshotRepository>
+    		<id>ossrh</id>
+    		<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+  		</snapshotRepository>
+	</distributionManagement>
+    
+    
     <build>
      <pluginManagement>
         	<plugins>
@@ -213,7 +215,7 @@
 				<configuration>
 					<serverId>sonatype-nexus-staging</serverId>
 					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
-					<autoReleaseAfterClose>true</autoReleaseAfterClose>
+					<autoReleaseAfterClose>false</autoReleaseAfterClose>
 				</configuration>
 			</plugin>
             <plugin>
