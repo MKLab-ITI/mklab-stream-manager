@@ -172,15 +172,7 @@
         </dependency>
     </dependencies>
     
-    <!--  
-	<repositories>
-		<repository>  
-       		<id>mvn-neo4j</id>  
-       		<url>http://m2.neo4j.org/content/groups/everything</url>  
-     	</repository>
-	</repositories>
-    -->
-    
+   	<repositories />
     <pluginRepositories />
     
     <distributionManagement>
@@ -189,7 +181,6 @@
     		<url>https://oss.sonatype.org/content/repositories/snapshots</url>
   		</snapshotRepository>
 	</distributionManagement>
-    
     
     <build>
      <pluginManagement>
@@ -215,7 +206,7 @@
 				<version>1.6.3</version>
 				<extensions>true</extensions>
 				<configuration>
-					<serverId>sonatype-nexus-staging</serverId>
+					<serverId>ossrh</serverId>
 					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
 					<autoReleaseAfterClose>false</autoReleaseAfterClose>
 				</configuration>
