@@ -168,16 +168,18 @@
         <dependency>
         	<groupId>gr.iti.mklab</groupId>
         	<artifactId>environmental-classification</artifactId>
-        	<version>0.0.1-SNAPSHOT</version>
+        	<version>0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
     
+    <!--  
 	<repositories>
 		<repository>  
        		<id>mvn-neo4j</id>  
        		<url>http://m2.neo4j.org/content/groups/everything</url>  
      	</repository>
 	</repositories>
+    -->
     
     <pluginRepositories />
     
