@@ -9,10 +9,13 @@ import gr.iti.mklab.framework.common.domain.config.Configuration;
 
 public class EnvironmentalClassifier extends Processor {
 
-	EnvironmentalClassification ec;
+	private EnvironmentalClassification ec;
+	private double threshold;
 	
 	public EnvironmentalClassifier(Configuration configuration) {
 		super(configuration);
+		
+		threshold = Double.parseDouble(configuration.getParameter("threshold", "0.2"));
 		
 		ec = new EnvironmentalClassification();
 	}
@@ -41,7 +44,9 @@ public class EnvironmentalClassifier extends Processor {
 				item.addTopic("environment", probMap.get("Relevant"));
 				Map<String, Double> subTopics = result.getSecondClassifierProbabilitityMap();
 				for(String subTopic : subTopics.keySet()) {
-					item.addTopic(subTopic, subTopics.get(subTopic));
+					if(subTopics.get(subTopic) > threshold) {
+						item.addTopic(subTopic, subTopics.get(subTopic));
+					}
 				}
 			}
 			
