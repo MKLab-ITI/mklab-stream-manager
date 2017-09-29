@@ -1,4 +1,4 @@
-package gr.iti.mklab.sfc.processors;
+package gr.iti.mklab.sfc.filters;
 
 import java.util.Map;
 
@@ -6,8 +6,9 @@ import gr.iti.mklab.classifiers.ClassificationResult;
 import gr.iti.mklab.classifiers.EnvironmentalClassification;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.config.Configuration;
+import gr.iti.mklab.sfc.filters.ItemFilter;
 
-public class EnvironmentalClassifier extends Processor {
+public class EnvironmentalClassifier extends ItemFilter {
 
 	private EnvironmentalClassification ec;
 	private double threshold;
@@ -21,7 +22,7 @@ public class EnvironmentalClassifier extends Processor {
 	}
 
 	@Override
-	public void process(Item item) {
+	public boolean accept(Item item) {
 		String lang = item.getLanguage();
 		
 		String text = "";
@@ -48,25 +49,21 @@ public class EnvironmentalClassifier extends Processor {
 						item.addTopic(subTopic, subTopics.get(subTopic));
 					}
 				}
+				
+				return true;
+			}
+			else {
+				return false;
 			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
-		
-		System.out.println(item.toString());
 	}
 
-	public static void main(String...args) {
-		System.out.println("TEST");
-		
-		EnvironmentalClassifier clssf = new EnvironmentalClassifier(null);
-		
-		Item item = new Item();
-		item.setLanguage("en");
-		item.setTitle("it was first held in 1974 to raise awareness about marine pollution human overpopulation& global warming #WorldEnvironmentDay");
-		
-		clssf.process(item);
-		
+	@Override
+	public String name() {
+		return "EnvironmentalClassifier";
 	}
 }
