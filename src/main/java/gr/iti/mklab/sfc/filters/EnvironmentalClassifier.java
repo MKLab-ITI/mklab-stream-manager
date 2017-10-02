@@ -41,13 +41,13 @@ public class EnvironmentalClassifier extends ItemFilter {
 		
 			Map<String, Double> probMap = result.getFirstClassifierProbabilityMap();		
 			
-			if(probMap.get("Relevant") > threshold) {
+			if(probMap.get("Relevant") > 0.5) {
 				item.addTopic("environment", probMap.get("Relevant"));
-				if(probMap.get("Relevant") > 0.5) {
+				if(result.getSecondClassifierProbabilitityMap() != null) {
 					Map<String, Double> subTopics = result.getSecondClassifierProbabilitityMap();
 					for(String subTopic : subTopics.keySet()) {
 						if(subTopics.get(subTopic) > threshold) {
-							item.addTopic(subTopic, subTopics.get(subTopic));
+							item.addTopic("environment." + subTopic, subTopics.get(subTopic));
 						}
 					}
 				}
@@ -55,6 +55,10 @@ public class EnvironmentalClassifier extends ItemFilter {
 				return true;
 			}
 			else {
+				if(probMap.get("Relevant") > threshold) {
+					return true;
+				}
+				
 				return false;
 			}
 			
