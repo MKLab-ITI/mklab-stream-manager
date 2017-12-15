@@ -23,6 +23,11 @@ public class EnvironmentalClassifier extends ItemFilter {
 
 	@Override
 	public boolean accept(Item item) {
+		
+		if(!"Twitter".equals(item.getSource())) {
+			return true;
+		}
+		
 		String lang = item.getLanguage();
 		
 		String text = "";
