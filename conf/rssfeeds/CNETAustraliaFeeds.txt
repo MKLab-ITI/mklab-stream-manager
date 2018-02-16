@@ -1,9 +1,0 @@
-http://feeds.feedburner.com/CNETAustralia
-http://feeds.feedburner.com/CNETAustralia-News
-http://feeds.feedburner.com/CNETAustralia-Reviews
-http://feeds.feedburner.com/CNETAustralia-CamerasCamcordersAndPrinters
-http://feeds.feedburner.com/CnetAustralia-Exposure
-http://feeds.feedburner.com/CNETAustralia-Games
-http://feeds.feedburner.com/CNETAustralia-BroadbandAndWireless
-http://feeds.feedburner.com/CNETAustralia-MusicAndMovies
-http://feeds.feedburner.com/CNETAustralia-LaptopsDesktopsPrintersAndSoftware

@@ -1,9 +1,0 @@
-http://news.sky.com/feeds/rss/home.xml
-http://news.sky.com/feeds/rss/uk.xml
-http://news.sky.com/feeds/rss/world.xml
-http://news.sky.com/feeds/rss/us.xml
-http://news.sky.com/feeds/rss/business.xml
-http://news.sky.com/feeds/rss/politics.xml
-http://news.sky.com/feeds/rss/technology.xml
-http://news.sky.com/feeds/rss/entertainment.xml
-http://news.sky.com/feeds/rss/strange.xml

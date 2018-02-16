@@ -1,2 +1,0 @@
-http://www.thesun.co.uk/sol/homepage/news/rss/
-http://www.nationalarchives.gov.uk/rss/news.xml

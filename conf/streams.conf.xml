@@ -11,12 +11,13 @@
    	</Inputs>
    	
    	<Storages>
-    	<!-- Mongodb storage configuration  -->
+    	<!-- Mongodb storage configuration  
       	<Storage id="Mongodb">
         	<Parameter name="Classpath"><![CDATA[gr.iti.mklab.sfc.storages.MongoDbStorage]]></Parameter>
          	<Parameter name="mongodb.host"><![CDATA[127.0.0.1]]></Parameter>
          	<Parameter name="mongodb.database"><![CDATA[test]]></Parameter>
       	</Storage>
+      	-->
       	
       	<!-- Redis storage configuaration 
        	<Storage id="Redis">
@@ -179,14 +180,14 @@
   		</Stream> 
       	-->
       	
-      	<!-- RSS Stream Handler -->
+      	<!-- RSS Stream Handler 
       	<Stream id="RSS">
           	<Parameter name="Classpath">
             	<![CDATA[gr.iti.mklab.sfc.streams.impl.RssStream]]>
             </Parameter>
         	<Parameter name="timeWindow"><![CDATA[30]]></Parameter>	        
   		</Stream> 
-      
+      	-->
       	
 	</Streams>
 </Configuration>

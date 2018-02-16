@@ -1,7 +1,0 @@
-http://zeenews.india.com/rss/nation.aspx
-http://zeenews.india.com/rss/world.aspx
-http://zeenews.india.com/rss/states.aspx
-http://zeenews.india.com/rss/s-asia.aspx
-http://zeenews.india.com/rss/business.aspx
-http://zeenews.india.com/rss/sports.aspx
-http://zeenews.india.com/rss/sci-tech.aspx

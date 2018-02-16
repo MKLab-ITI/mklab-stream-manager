@@ -1,5 +1,0 @@
-http://rssfeeds.aph.gov.au/senate/new_inquiries.xml
-http://rssfeeds.aph.gov.au/senate/reports.xml
-http://rssfeeds.aph.gov.au/senate/upcoming_hearings.xml
-http://rssfeeds.aph.gov.au/senate/senators_details.xml
-http://rssfeeds.aph.gov.au/senate/sds.xml

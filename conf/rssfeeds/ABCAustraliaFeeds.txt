@@ -1,4 +1,0 @@
-http://www.abc.net.au/syndication/rss-childrens-epg.xml
-http://www.abc.net.au/bestof/bestofabc.xml
-http://www.abc.net.au/local/rss/recipes.xml
-http://www.abc.net.au/sport/syndicate/sport_all.xml

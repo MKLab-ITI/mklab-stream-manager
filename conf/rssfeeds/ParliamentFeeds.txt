@@ -1,4 +1,0 @@
-http://www.parliament.uk/g/RSS/news-feed/?pageInstanceId=209&limit=20
-http://www.parliament.uk/g/RSS/news-feed/?pageInstanceId=25366&limit=20
-http://www.parliament.uk/g/RSS/news-feed/?pageInstanceId=25367&limit=20
-http://www.parliament.uk/g/RSS/news-feed/?pageInstanceId=25388&limit=20

@@ -1,8 +1,0 @@
-http://www.ctvnews.ca/rss/ctvnews-ca-top-stories-public-rss-1.822009
-http://www.ctvnews.ca/rss/ctvnews-ca-canada-public-rss-1.822284
-http://www.ctvnews.ca/rss/ctvnews-ca-world-public-rss-1.822289
-http://www.ctvnews.ca/rss/ctvnews-ca-sci-tech-public-rss-1.822295
-http://www.ctvnews.ca/rss/ctvnews-ca-health-public-rss-1.822299
-http://www.ctvnews.ca/rss/ctvnews-ca-entertainment-public-rss-1.822292
-http://www.ctvnews.ca/rss/business/ctv-news-business-headlines-1.867648
-http://www.ctvnews.ca/rss/ctvnews-ca-politics-public-rss-1.822302

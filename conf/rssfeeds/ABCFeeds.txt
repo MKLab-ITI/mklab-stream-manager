@@ -1,8 +1,0 @@
-http://feeds.abcnews.com/abcnews/moneyheadlines
-http://feeds.abcnews.com/abcnews/entertainmentheadlines
-http://feeds.abcnews.com/abcnews/sportsheadlines
-http://feeds.abcnews.com/abcnews/worldnewsheadlines
-http://feeds.abcnews.com/abcnews/healthheadlines
-http://feeds.abcnews.com/abcnews/internationalheadlines
-http://feeds.abcnews.com/abcnews/usheadlines
-http://feeds.abcnews.com/abcnews/technologyheadlines

@@ -1,6 +1,0 @@
-http://www.eia.gov/rss/todayinenergy.xml
-http://www.eia.gov/about/new/WNtest3.cfm
-http://www.eia.gov/rss/radio.xml
-http://www.eia.gov/rss/press_rss.xml
-http://www.eia.gov/energy_in_brief/eibinfo.cfm
-http://www.eia.gov/oog/info/twip/week_in_petroleum_rss.xml

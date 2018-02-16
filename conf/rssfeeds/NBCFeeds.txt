@@ -1,9 +1,0 @@
-http://feeds.nbcnews.com/feeds/topstories
-http://feeds.nbcnews.com/feeds/usnews
-http://feeds.nbcnews.com/feeds/politics
-http://feeds.nbcnews.com/feeds/business
-http://feeds.nbcnews.com/feeds/health
-http://feeds.nbcnews.com/feeds/technology
-http://feeds.nbcnews.com/feeds/travel
-http://feeds.nbcnews.com/feeds/weather
-http://feeds.nbcnews.com/feeds/today

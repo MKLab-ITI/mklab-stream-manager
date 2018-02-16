@@ -1,9 +1,0 @@
-http://www.amnestyusa.org/rss/action/all/rss.xml
-http://www.amnestyusa.org/rss/news/all/rss.xml
-http://www.amnestyusa.org/rss/report/all/rss.xml
-http://www.amnestyusa.org/rss/news/Africa/rss.xml
-http://www.amnestyusa.org/rss/news/Asia%20and%20the%20Pacific/rss.xml
-http://www.amnestyusa.org/rss/news/Americas/rss.xml
-http://www.amnestyusa.org/rss/news/Europe/rss.xml
-http://www.amnestyusa.org/rss/news/Middle%20East%20and%20North%20Africa/rss.xml
-http://blog.amnestyusa.org/feed/

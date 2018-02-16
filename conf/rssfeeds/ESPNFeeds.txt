@@ -1,7 +1,0 @@
-http://sports.espn.go.com/espn/rss/news
-http://sports.espn.go.com/espn/rss/nfl/news
-http://sports.espn.go.com/espn/rss/nba/news
-http://sports.espn.go.com/espn/rss/mlb/news
-http://sports.espn.go.com/espn/rss/nhl/news
-http://sports.espn.go.com/espn/rss/rpm/news
-http://espnfc.com/rss/news

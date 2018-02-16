@@ -22,14 +22,12 @@
         		<SizeBasedTriggeringPolicy size="50 MB"/>
       		</Policies>
     	</RollingFile>
-    	<GELF name="GelfAppender" server="127.0.0.1" port="12201" hostName="127.0.0.1"/>
   	</Appenders>
   	
   	<Loggers>
     	<Root level="info">
       		<AppenderRef ref="AsyncAppender" />
       		<AppenderRef ref="RollingFileAppender" />
-      		<AppenderRef ref="GelfAppender"/>
     	</Root>
   	</Loggers>
 </Configuration>

@@ -1,7 +1,0 @@
-http://www.dol.gov/rss/news.xml
-http://www.dol.gov/rss/speeches.xml
-http://social.dol.gov/blog/feed/
-http://www.dol.gov/rss/photos.xml
-http://www.dol.gov/rss/videos.xml
-http://www.dol.gov/rss/congressional.xml
-http://www.dol.gov/ebsa/rss/news.xml

@@ -1,5 +1,0 @@
-http://news.oneindia.in/rss/news-business-fb.xml
-http://news.oneindia.in/rss/news-international-fb.xml
-http://news.oneindia.in/rss/news-india-fb.xml
-http://news.oneindia.in/rss/news-sports-fb.xml
-http://news.oneindia.in/rss/feature-fb.xml
