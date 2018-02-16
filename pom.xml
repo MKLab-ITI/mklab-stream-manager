@@ -3,7 +3,7 @@
 
     <groupId>gr.iti.mklab</groupId>
     <artifactId>mklab-stream-manager</artifactId>
-    <version>0.3-SNAPSHOT</version>
+    <version>0.3-lightweight-SNAPSHOT</version>
     <packaging>jar</packaging>
 	
     <name>mklab-stream-manager</name>
@@ -43,13 +43,13 @@
         <dependency>
             <groupId>gr.iti.mklab</groupId>
             <artifactId>mklab-framework-common</artifactId>
-            <version>0.3-SNAPSHOT</version>
+            <version>0.3-lightweight-SNAPSHOT</version>
         </dependency>
         
         <dependency>
   			<groupId>gr.iti.mklab</groupId>
   			<artifactId>mklab-socialmedia-abstractions</artifactId>
-  			<version>0.3-SNAPSHOT</version>
+  			<version>0.3-lightweight-SNAPSHOT</version>
   			<exclusions>
   				<exclusion>
   					<artifactId>log4j</artifactId>
@@ -58,11 +58,6 @@
   			</exclusions>
         </dependency>
         
-        <dependency>
-            <groupId>gr.iti.mklab</groupId>
-            <artifactId>mklab-framework-client</artifactId>
-            <version>0.3-SNAPSHOT</version>
-        </dependency>
         
        	<dependency>
 			<groupId>org.apache.lucene</groupId>
@@ -94,32 +89,7 @@
   			</exclusions>
   		</dependency>
   	
-        <dependency>
-        	<groupId>com.thinkaurelius.titan</groupId>
-        	<artifactId>titan-hbase</artifactId>
-        	<version>0.4.4</version>
-        	<exclusions>
-        		<exclusion>  
-       				<!-- declare the exclusion here -->
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-api</artifactId>
-        		</exclusion>
-        		<exclusion>
-					<groupId>org.slf4j</groupId>
-					<artifactId>slf4j-log4j12</artifactId>
-        		</exclusion>
-        		<exclusion>
-        			<artifactId>log4j</artifactId>
-        			<groupId>log4j</groupId>
-        		</exclusion>
-        	</exclusions> 
-        </dependency>
         
-        <dependency>
-        	<groupId>com.sun.jersey</groupId>
-        	<artifactId>jersey-client</artifactId>
-        	<version>1.9</version>
-        </dependency>
         
         <dependency>
         	<groupId>com.cybozu.labs</groupId>
@@ -127,18 +97,7 @@
         	<version>1.1-20120112</version>
         </dependency>
 
-  		<dependency>
-    		<groupId>edu.stanford.nlp</groupId>
-    		<artifactId>stanford-corenlp</artifactId>
-    		<version>3.2.0</version>
-		</dependency>
 
-  		<dependency>
-  			<groupId>edu.stanford.nlp</groupId>
-  			<artifactId>stanford-corenlp</artifactId>
-  			<version>3.2.0</version>
-  			<classifier>models</classifier>
-  		</dependency>
   		
         <dependency>
         	<groupId>com.rabbitmq</groupId>
@@ -156,19 +115,20 @@
         	<version>2.2</version>
         </dependency>
         <dependency>
-        	<groupId>org.graylog2.log4j2</groupId>
-        	<artifactId>log4j2-gelf</artifactId>
-        	<version>1.0.1</version>
-        </dependency>
-        <dependency>
         	<groupId>org.apache.commons</groupId>
         	<artifactId>commons-collections4</artifactId>
         	<version>4.0</version>
         </dependency>
         <dependency>
-        	<groupId>gr.iti.mklab</groupId>
-        	<artifactId>environmental-classification</artifactId>
-        	<version>0.1-SNAPSHOT</version>
+        	<groupId>edu.stanford.nlp</groupId>
+        	<artifactId>stanford-corenlp</artifactId>
+        	<version>3.8.0</version>
+        	<exclusions>
+        		<exclusion>
+        			<groupId>com.apple</groupId>
+        			<artifactId>AppleJavaExtensions</artifactId>
+        		</exclusion>
+        	</exclusions>
         </dependency>
     </dependencies>
     

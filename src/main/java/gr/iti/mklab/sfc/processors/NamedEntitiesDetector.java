@@ -30,7 +30,7 @@ public class NamedEntitiesDetector extends Processor {
 		super(configuration);
 		
 		StanfordRedwoodConfiguration.setup();
-		Redwood.hideAllChannels();
+		Redwood.hideChannelsEverywhere();
 
 		String serializedClassifier = configuration.getParameter("serializedClassifier");
 		classifier = CRFClassifier.getClassifierNoExceptions(serializedClassifier);

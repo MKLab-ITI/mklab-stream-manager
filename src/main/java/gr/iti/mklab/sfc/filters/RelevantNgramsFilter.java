@@ -3,8 +3,8 @@ package gr.iti.mklab.sfc.filters;
 import gr.iti.mklab.framework.common.domain.Item;
 import gr.iti.mklab.framework.common.domain.config.Configuration;
 
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ public class RelevantNgramsFilter  extends ItemFilter {
 		
 		String filename = configuration.getParameter("RelevantTermsFilename");
 		try {
-			Iterable<String> lines = IOUtils.readLines(new FileInputStream(filename));
+			Iterable<String> lines = IOUtils.readLines(new FileReader(filename));
 			for(String line : lines) {
 				String[] ngram = line.split("\t");
 				ngrams.add(ngram);
