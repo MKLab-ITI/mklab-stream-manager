@@ -3,7 +3,7 @@
 
     <groupId>gr.iti.mklab</groupId>
     <artifactId>mklab-stream-manager</artifactId>
-    <version>0.3-lightweight-SNAPSHOT</version>
+    <version>0.3-lightweight</version>
     <packaging>jar</packaging>
 	
     <name>mklab-stream-manager</name>
