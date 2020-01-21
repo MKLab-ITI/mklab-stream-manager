@@ -160,7 +160,6 @@ public class TwitterItem extends Item {
 				} catch (Exception e) {
 					continue;
 				}	
-				
 			}
 		}
 		

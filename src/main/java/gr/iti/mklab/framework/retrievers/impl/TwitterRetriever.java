@@ -56,7 +56,8 @@ public class TwitterRetriever extends Retriever {
 			.setOAuthConsumerKey(credentials.getKey())
 			.setOAuthConsumerSecret(credentials.getSecret())
 			.setOAuthAccessToken(credentials.getAccessToken())
-			.setOAuthAccessTokenSecret(credentials.getAccessTokenSecret());
+			.setOAuthAccessTokenSecret(credentials.getAccessTokenSecret())
+			.setTweetModeExtended(true);
 		Configuration conf = cb.build();
 		
 		tf = new TwitterFactory(conf);
