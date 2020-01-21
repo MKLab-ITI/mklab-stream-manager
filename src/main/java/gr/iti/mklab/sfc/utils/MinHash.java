@@ -108,7 +108,7 @@ public class MinHash {
      * 
      * @param seed a base seed
      * @param num the number of hash functions.
-     * @return
+     * @return array of HashFunctions
      */
     public static HashFunction[] createHashFunctions(final int seed, final int num) {
         final HashFunction[] hashFunctions = new HashFunction[num];
@@ -124,7 +124,7 @@ public class MinHash {
      * 
      * @param text a target text
      * @return MinHash value
-     * @throws IOException
+     * @throws IOException IO exception
      */
     public byte[] calculate(final String text) throws IOException {
         byte[] value = null;
@@ -146,7 +146,7 @@ public class MinHash {
      * @param analyzer analyzer to parse a text
      * @param text a target text
      * @return MinHash value
-     * @throws IOException
+     * @throws IOException IO exception
      */
     public static byte[] calculate(final Analyzer analyzer, final String text) throws IOException {
         byte[] value = null;
@@ -166,8 +166,8 @@ public class MinHash {
      * Calculates MinHash value.
      * 
      * @param data data with analyzer, text and the number of bits
-     * @return MinHash value
-     * @throws IOException
+     * @return MinHash value 
+     * @throws IOException IO exception
      */
     public static byte[] calculate(final Data data) throws IOException {
         return calculate(data.analyzer, data.text);
@@ -178,7 +178,7 @@ public class MinHash {
      * 
      * @param data data with analyzer, text and the number of bits
      * @return MinHash value
-     * @throws IOException
+     * @throws IOException IO exception
      */
     public static byte[] calculate(final Data[] data) throws IOException {
         int bitSize = 0;
@@ -209,8 +209,8 @@ public class MinHash {
     /**
      * Returns a string formatted by bits.
      * 
-     * @param data
-     * @return
+     * @param data byte array to be transformed in string
+     * @return string representation of byte array
      */
     public static String toBinaryString(final byte[] data) {
         if (data == null) {
@@ -235,8 +235,8 @@ public class MinHash {
     /**
      * Returns a string formatted by bits.
      * 
-     * @param data
-     * @return
+     * @param data byte array to be transformed in string
+     * @return string representation of the byte array 
      */
     public static String toString(final byte[] data) {
         if (data == null) {
@@ -269,10 +269,10 @@ public class MinHash {
     /**
      * Create a target data which has analyzer, text and the number of bits.
      * 
-     * @param analyzer
-     * @param text
-     * @param numOfBits
-     * @return
+     * @param analyzer text analyzer
+     * @param text text to be analyzed
+     * @param numOfBits number of bits
+     * @return new data 
      */
     public static Data newData(final Analyzer analyzer, final String text, final int numOfBits) {
         return new Data(analyzer, text, numOfBits);
