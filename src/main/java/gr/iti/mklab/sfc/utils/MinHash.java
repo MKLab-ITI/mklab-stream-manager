@@ -1,7 +1,6 @@
 package gr.iti.mklab.sfc.utils;
 
 import java.io.IOException;
-import java.io.Reader;
 import java.util.Arrays;
 
 import org.apache.lucene.analysis.Analyzer;
@@ -12,6 +11,7 @@ import org.apache.lucene.analysis.core.WhitespaceTokenizer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
 
+import com.google.common.base.Charsets;
 import com.google.common.hash.HashCode;
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
@@ -27,7 +27,7 @@ public class MinHash {
 
 	public static MinHash getInstance(int hashBit, int num) {
 		MinHash mh = new MinHash();
-		mh.analyzer = new MinHashAnalyzer (hashBit, 0, num);
+		mh.analyzer = new MinHashAnalyzer(hashBit, 0, num);
 		
 		return mh;
     }
@@ -401,7 +401,7 @@ public class MinHash {
 	        while (input.incrementToken()) {
 	            final String term = charTermAttribute.toString();
 	            for (int i = 0; i < functionsSize; i++) {
-	            	final HashCode hashCode = hashFunctions[i].hashString(term);
+	            	final HashCode hashCode = hashFunctions[i].hashString(term, Charsets.UTF_8);
 	                final long value = hashCode.asLong();
 	                if (value < minHashValues[i]) {
 	                    minHashValues[i] = value;
@@ -458,12 +458,23 @@ public class MinHash {
 	    }
 
 		@Override
-		protected TokenStreamComponents createComponents(String fieldName, Reader reader) {
-	        final Tokenizer tokenizer = new WhitespaceTokenizer(reader);
+		protected TokenStreamComponents createComponents(String fieldName) {
+			final Tokenizer tokenizer = new WhitespaceTokenizer();
 	        final TokenStream stream = new MinHashTokenFilter(tokenizer, hashFunctions, hashBit);
 	        
 	        return new TokenStreamComponents(tokenizer, stream);
 		}
 
 	}
+	
+	public static void main(String...args) throws IOException {
+		String q = "(recyclicing  waste time";
+
+		MinHash mh = MinHash.getInstance(12, 12);
+		
+		byte[] qq = mh.calculate(q);
+		System.out.println(MinHash.toString(qq));
+		
+	}
+	
 }

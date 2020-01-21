@@ -9,8 +9,9 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.Tokenizer;
 import org.apache.lucene.analysis.core.LowerCaseFilter;
-import org.apache.lucene.analysis.core.WhitespaceTokenizer;
+import org.apache.lucene.analysis.standard.ClassicTokenizer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 
 import gr.iti.mklab.framework.common.domain.Item;
@@ -37,7 +38,7 @@ public class SwearItemFilter extends ItemFilter {
 	
 	@Override
 	public boolean accept(Item item) {
-		
+		System.out.println("INSIDE ACCEPT!");
 		try {
 			String title = item.getTitle();
 			if(title == null) {
@@ -47,17 +48,21 @@ public class SwearItemFilter extends ItemFilter {
 		
 			title = title.replaceAll("\"", " ");
 			title = title.replaceAll("'", " ");
-			title = title.replaceAll(".", " ");
+			
+			System.out.println(title);
 			
 			Reader reader = new StringReader(title);
-			TokenStream tokenizer = new WhitespaceTokenizer(reader);
+			Tokenizer tokenizer = new ClassicTokenizer();
+			tokenizer.setReader(reader);
+			
 			TokenStream stream = new LowerCaseFilter(tokenizer);
 			
 			List<String> tokens = new ArrayList<String>();
-			CharTermAttribute charTermAtt = stream.addAttribute(CharTermAttribute.class);
 			stream.reset();
 			while (stream.incrementToken()) {
-				String token = charTermAtt.toString();
+				String token = stream.getAttribute(CharTermAttribute.class).toString();
+				
+				System.out.println(token);
 				if(token.contains("http") || token.contains("https") || token.length() <= 1) {
 					continue;
 				}
@@ -69,6 +74,8 @@ public class SwearItemFilter extends ItemFilter {
 			stream.end();  
 			stream.close();
 			
+			System.out.print(tokens);
+			
 			for(String token : tokens) {
 				if(swearwords.contains(token)) {
 					incrementDiscarded();
@@ -77,6 +84,7 @@ public class SwearItemFilter extends ItemFilter {
 			}
 			
 		} catch (Exception e) {
+			System.out.print("EXCEPTION!!!!");
 			e.printStackTrace();
 			incrementDiscarded();
 			return false;
@@ -91,4 +99,14 @@ public class SwearItemFilter extends ItemFilter {
 		return "SwearItemFilter";
 	}
 
+	public static void main(String...args) {
+		
+		Configuration configuration = new Configuration();
+		SwearItemFilter f = new SwearItemFilter(configuration);
+		Item item = new Item();
+		item.setTitle("You are a cocksucker!!! Motherficjer! And one two three.");
+		System.out.println(item.getTitle());
+		f.accept(item);
+	}
+	
 }

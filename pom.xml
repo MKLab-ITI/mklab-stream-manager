@@ -39,38 +39,6 @@
     </properties>
    
     <dependencies>
-    	<!-- MKLAB projects -->
-        <dependency>
-            <groupId>gr.iti.mklab</groupId>
-            <artifactId>mklab-framework-common</artifactId>
-            <version>0.3-lightweight-SNAPSHOT</version>
-        </dependency>
-        
-        <dependency>
-  			<groupId>gr.iti.mklab</groupId>
-  			<artifactId>mklab-socialmedia-abstractions</artifactId>
-  			<version>0.3-lightweight-SNAPSHOT</version>
-  			<exclusions>
-  				<exclusion>
-  					<artifactId>log4j</artifactId>
-  					<groupId>log4j</groupId>
-  				</exclusion>
-  			</exclusions>
-        </dependency>
-        
-        
-       	<dependency>
-			<groupId>org.apache.lucene</groupId>
-			<artifactId>lucene-core</artifactId>
-			<version>4.10.2</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.lucene</groupId>
-			<artifactId>lucene-analyzers-common</artifactId>
-			<version>4.10.2</version>
-		</dependency>
-
   		<dependency>
     		<groupId>com.google.guava</groupId>
         	<artifactId>guava</artifactId>
@@ -89,21 +57,12 @@
   			</exclusions>
   		</dependency>
   	
-        
-        
         <dependency>
         	<groupId>com.cybozu.labs</groupId>
         	<artifactId>langdetect</artifactId>
         	<version>1.1-20120112</version>
         </dependency>
 
-
-  		
-        <dependency>
-        	<groupId>com.rabbitmq</groupId>
-        	<artifactId>amqp-client</artifactId>
-        	<version>3.4.2</version>
-        </dependency>
         <dependency>
         	<groupId>redis.clients</groupId>
         	<artifactId>jedis</artifactId>
@@ -122,14 +81,135 @@
         <dependency>
         	<groupId>edu.stanford.nlp</groupId>
         	<artifactId>stanford-corenlp</artifactId>
-        	<version>3.8.0</version>
+        	<version>3.9.1</version>
         	<exclusions>
         		<exclusion>
         			<groupId>com.apple</groupId>
         			<artifactId>AppleJavaExtensions</artifactId>
         		</exclusion>
+        		<exclusion>
+        			<groupId>org.apache.lucene</groupId>
+        			<artifactId>lucene-queries</artifactId>
+        		</exclusion>
         	</exclusions>
         </dependency>
+        
+        <dependency>
+        	<groupId>org.twitter4j</groupId>
+        	<artifactId>twitter4j-core</artifactId>
+        	<version>4.0.6</version>
+        </dependency>
+        <dependency>
+        	<groupId>org.twitter4j</groupId>
+        	<artifactId>twitter4j-stream</artifactId>
+        	<version>4.0.6</version>
+        </dependency>
+        <dependency>
+        	<groupId>com.twitter</groupId>
+        	<artifactId>hbc-core</artifactId>
+        	<version>2.2.0</version>
+        </dependency>
+        <dependency>
+        	<groupId>com.restfb</groupId>
+        	<artifactId>restfb</artifactId>
+        	<version>2.2.0</version>
+        </dependency>
+        <dependency>
+        	<groupId>org.mongodb</groupId>
+        	<artifactId>mongodb-driver</artifactId>
+        	<version>3.0.4</version>
+        </dependency>
+        
+        <dependency>
+        	<groupId>org.mongodb.morphia</groupId>
+        	<artifactId>morphia</artifactId>
+        	<version>1.0.1</version>
+        	<exclusions>
+        		<exclusion>
+        			<artifactId>mongo-java-driver</artifactId>
+        			<groupId>org.mongodb</groupId>
+        		</exclusion>
+        	</exclusions>
+        </dependency>
+
+        <dependency>
+        	<groupId>com.google.code.gson</groupId>
+        	<artifactId>gson</artifactId>
+        	<version>2.8.2</version>
+        </dependency>
+        <dependency>
+        	<groupId>org.apache.solr</groupId>
+        	<artifactId>solr-solrj</artifactId>
+        	<version>7.2.1</version>
+        </dependency>
+        <dependency>
+        	<groupId>org.antlr</groupId>
+        	<artifactId>antlr4-runtime</artifactId>
+        	<version>4.5.3</version>
+        </dependency>
+        <dependency>
+        	<groupId>com.bpodgursky</groupId>
+        	<artifactId>jbool_expressions</artifactId>
+        	<version>1.14</version>
+        </dependency>
+        <dependency>
+        	<groupId>org.apache.lucene</groupId>
+        	<artifactId>lucene-queryparser</artifactId>
+        	<version>5.5.0</version>
+        </dependency>
+        <dependency>
+        	<groupId>com.google.api-client</groupId>
+        	<artifactId>google-api-client</artifactId>
+        	<version>1.23.0</version>
+        </dependency>
+        <dependency>
+        	<groupId>org.jsoup</groupId>
+        	<artifactId>jsoup</artifactId>
+        	<version>1.11.2</version>
+        </dependency>
+        
+      	<dependency>
+			<groupId>com.flickr4java</groupId>
+			<artifactId>flickr4java</artifactId>
+			<version>2.17</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>log4j</artifactId>
+					<groupId>log4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+      	<dependency>
+      		<groupId>com.rometools</groupId>
+      		<artifactId>rome</artifactId>
+      		<version>1.9.0</version>
+      	</dependency>
+      	<dependency>
+      		<groupId>com.rometools</groupId>
+      		<artifactId>rome-modules</artifactId>
+      		<version>1.9.0</version>
+      	</dependency>
+      	<dependency>
+      		<groupId>com.google.apis</groupId>
+      		<artifactId>google-api-services-youtube</artifactId>
+      		<version>v3-rev192-1.23.0</version>
+      	</dependency>
+      	<dependency>
+      		<groupId>com.google.gdata</groupId>
+      		<artifactId>core</artifactId>
+      		<version>1.47.1</version>
+      	</dependency>
+      	<dependency>
+      		<groupId>org.apache.lucene</groupId>
+      		<artifactId>lucene-core</artifactId>
+      		<version>7.2.1</version>
+      	</dependency>
+      	<dependency>
+      		<groupId>org.apache.lucene</groupId>
+      		<artifactId>lucene-analyzers-common</artifactId>
+      		<version>7.2.1</version>
+      	</dependency>
     </dependencies>
     
    	<repositories>

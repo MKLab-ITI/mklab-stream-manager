@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
-import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.core.WhitespaceTokenizer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 
@@ -36,7 +35,8 @@ public class TokensItemFilter  extends ItemFilter {
 			}
 		
 			Reader reader = new StringReader(title);
-			TokenStream tokenizer = new WhitespaceTokenizer(reader);
+			WhitespaceTokenizer tokenizer = new WhitespaceTokenizer();
+			tokenizer.setReader(reader);
 			
 			List<String> tokens = new ArrayList<String>();
 			CharTermAttribute charTermAtt = tokenizer.addAttribute(CharTermAttribute.class);
