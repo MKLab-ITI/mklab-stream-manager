@@ -335,7 +335,7 @@ public class FacebookRetriever extends Retriever {
 
 	public static void main(String...args) {		
 		Credentials credentials = new Credentials();
-		credentials.setAccessToken("1489781381109760|bd99f6158a9d3a1f1ab8c82cc8ced9b5");
+		credentials.setAccessToken("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 		FacebookRetriever retriever = new FacebookRetriever(credentials);
 		
 		String uid = "7236107677";
