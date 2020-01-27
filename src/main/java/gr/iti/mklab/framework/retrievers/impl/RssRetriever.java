@@ -10,8 +10,9 @@ import java.util.List;
 import org.apache.logging.log4j.Logger;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.logging.log4j.LogManager;
 
 import com.restfb.util.StringUtils;
@@ -47,7 +48,8 @@ public class RssRetriever extends Retriever {
 	}
 
 	public final Logger logger = LogManager.getLogger(RssRetriever.class);
-	private DefaultHttpClient httpClient = new DefaultHttpClient();
+	
+	private HttpClient httpClient = HttpClientBuilder.create().build();
 	 
 	@Override
 	public Response retrieve(Feed feed) throws Exception {
