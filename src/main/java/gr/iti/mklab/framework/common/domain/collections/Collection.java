@@ -86,6 +86,8 @@ public class Collection extends JSONable {
     // Exclude specific users from the collection during retrieval
     private Set<String> usersToExclude = new HashSet<String>();
     
+    private Boolean favorite = false;
+    
     // Retrieve items in time range [since- until]
     protected long since;
     
@@ -328,7 +330,15 @@ public class Collection extends JSONable {
     	System.out.println(collection.toString());
     }
     
-    public static class Keyword {
+    public Boolean getFavorite() {
+		return favorite;
+	}
+
+	public void setFavorite(Boolean favorite) {
+		this.favorite = favorite;
+	}
+
+	public static class Keyword {
     	
     	private String keyword;
     	private String[] sources;
