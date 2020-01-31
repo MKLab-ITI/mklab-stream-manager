@@ -61,8 +61,7 @@ public class NamedEntitiesDetector extends Processor {
 		// clean before extraction
 		text = Jsoup.parse(text).text();
 		text = StringEscapeUtils.unescapeXml(text);
-		text = text.replaceAll("&\\s+", "&amp; ");
-		
+		text = StringEscapeUtils.escapeXml(text);
 		String textXML = classifier.classifyWithInlineXML(text);
 		
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -118,12 +117,14 @@ public class NamedEntitiesDetector extends Processor {
 		conf.setParameter("serializedClassifier", "english.all.3class.distsim.crf.ser.gz");
 		NamedEntitiesDetector detector = new NamedEntitiesDetector(conf);
 		
+		String title = "David Cameron & <a href='/test'>&Barack Obama</a>: pensioner benefits protected if Tories win election - video";
 		Item item = new Item();
-		item.setTitle("David Cameron &amp; <a>Barack Obama</a>: pensioner benefits protected if Tories win election - video");
+		item.setTitle(title);
 		//item.setDescription("A new Conservative government would make unemployed young people work for benefits, David Cameron says on Tuesday. In a speech in Hove, East Sussex, the prime minister says that under Tory plans 18 to 21-year-olds who have been out of work, education or training for six months would have to take on unpaid community work if they want to claim benefits. 'From day one they should make an effort', he says Continue reading...");
 		
 		detector.process(item);
-		
+		System.out.println("TEST@@@");
 		System.out.println(item.getEntities());
+		 
 	}
 }

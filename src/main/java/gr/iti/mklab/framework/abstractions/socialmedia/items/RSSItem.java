@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -50,7 +51,8 @@ public class RSSItem extends Item {
 		}
 		
 		//Id
-		id = syndEntry.getLink();
+		
+		id = DigestUtils.sha256Hex(syndEntry.getLink());
 		
 		//Document's title
 		title = syndEntry.getTitle();
