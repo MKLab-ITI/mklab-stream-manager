@@ -272,7 +272,7 @@ public class StreamsManager implements Runnable {
 				Collection collection = actionPair.getKey();
 				String cId = collection.getId();
 				String action = actionPair.getRight();
-				logger.info("Action: " + action + " - collection: " + collection.getId() + " from user " + collection.geOwnertId());
+				logger.info("Action: " + action + " - collection: " + collection.getId() + " from user " + collection.getOwnertId());
 				
 				if(monitor == null) {
 					logger.error("Monitor has not been initialized. Cannot monitor any feed.");

@@ -61,6 +61,8 @@ public class Collection extends JSONable {
     // The group id of the use that created the Topic
     protected String groupId;
     
+    protected List<String> viewers = new ArrayList<String>();
+    
     // The group id of the use that created the Topic
     protected String privacy = "private";	// private - protected - public
     
@@ -105,7 +107,7 @@ public class Collection extends JSONable {
         this.ownerId = ownerId;
     }
 
-    public String geOwnertId() {
+    public String getOwnertId() {
         return ownerId;
     }
 
@@ -116,6 +118,10 @@ public class Collection extends JSONable {
     public String geOwnertLink() {
         return ownerLink;
     }
+    
+    public List<String> geViewers() {
+        return viewers;
+    }    
     
     public Date getCreationDate() {
         return new Date(creationDate);
