@@ -64,20 +64,22 @@ public class TwitterItem extends Item {
 		
 		pageUrl = "https://twitter.com/" + streamUser.getUsername() + "/statuses/" + status.getId();
 		
+		//Title of the tweet
+		title = status.getText();
+		language = status.getLang();
+		
 		//Store/Update on the basis that it is an original tweet or a retweet
 		Status retweetStatus = status.getRetweetedStatus();
 		if(retweetStatus != null) {
 			original = false;
 			reference = Source.Twitter + "#" + retweetStatus.getId();
 			referencedUserId = Source.Twitter + "#" + retweetStatus.getUser().getId();
+			
+			title = "RT @" + retweetStatus.getUser().getScreenName() + ": " + retweetStatus.getText();
 		}
 		else {
 			original = true;
 		}
-		
-		//Title of the tweet
-		title = status.getText();
-		language = status.getLang();
 		
 		//Tags 
 		HashtagEntity[] hashtags = status.getHashtagEntities();
