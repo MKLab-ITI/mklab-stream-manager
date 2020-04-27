@@ -60,13 +60,29 @@ public class NamedEntitiesDetector extends Processor {
 
 		// clean before extraction
 		text = Jsoup.parse(text).text();
+		
 		text = StringEscapeUtils.unescapeXml(text);
 		text = StringEscapeUtils.escapeXml(text);
 		
 		text = text.replaceAll("&#55356", " "); 
 		text = text.replaceAll("&#55357", " "); 
 		text = text.replaceAll("&#55358", " "); 
-		
+		text = text.replaceAll("&#56842", " "); 
+		text = text.replaceAll("&#56399", " "); 
+		text = text.replaceAll("&#56589", " "); 
+		text = text.replaceAll("&#56596", " "); 
+		text = text.replaceAll("&#56808", " "); 
+		text = text.replaceAll("&#56860", " ");
+		text = text.replaceAll("&#56810", " ");
+		text = text.replaceAll("&#56657", " ");
+		text = text.replaceAll("&#56391", " ");
+		text = text.replaceAll("&#56628", " ");
+		text = text.replaceAll("&#56397", " ");
+		text = text.replaceAll("&#56725", " ");
+		text = text.replaceAll("&#56611", " ");
+		text = text.replaceAll("&#56725", " ");
+		text = text.replaceAll("&#56376", " ");
+
 		String textXML = classifier.classifyWithInlineXML(text);
 		
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
