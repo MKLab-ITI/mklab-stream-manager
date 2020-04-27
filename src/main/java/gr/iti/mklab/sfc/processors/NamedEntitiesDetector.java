@@ -95,6 +95,13 @@ public class NamedEntitiesDetector extends Processor {
 		text = text.replaceAll("&#56814", " ");
 		text = text.replaceAll("&#56887", " ");
 		text = text.replaceAll("&#56821", " ");
+		text = text.replaceAll("&#56833", " ");
+		text = text.replaceAll("&#56841", " ");
+		text = text.replaceAll("&#56394", " ");
+		text = text.replaceAll("&#57320", " ");
+		text = text.replaceAll("&#56476", " ");
+		text = text.replaceAll("&#56485", " ");
+		text = text.replaceAll("&#56806", " ");
 
 		String textXML = classifier.classifyWithInlineXML(text);
 		
