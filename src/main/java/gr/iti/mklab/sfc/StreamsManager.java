@@ -206,16 +206,16 @@ public class StreamsManager implements Runnable {
 	 */
 	private void initStreams() throws StreamException {
 		streams = new HashMap<String, Stream>();
-		try {
-			for (String streamId : config.getStreamIds()) {
+		for (String streamId : config.getStreamIds()) {
+			try {
 				Configuration sconfig = config.getStreamConfig(streamId);
 				Stream stream = (Stream)Class.forName(sconfig.getParameter(Configuration.CLASS_PATH)).newInstance();
 				logger.info("Init " + streamId + ". Max Requests: " +stream.getMaxRequests() + " per " + stream.getTimeWindow());
 				streams.put(streamId, stream);
+			} catch(Exception e) {
+				e.printStackTrace();
+				//throw new StreamException("Error during streams initialization", e);
 			}
-		}catch(Exception e) {
-			e.printStackTrace();
-			throw new StreamException("Error during streams initialization", e);
 		}
 	}
 	
