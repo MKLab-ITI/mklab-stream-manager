@@ -213,8 +213,7 @@ public class StreamsManager implements Runnable {
 				logger.info("Init " + streamId + ". Max Requests: " +stream.getMaxRequests() + " per " + stream.getTimeWindow());
 				streams.put(streamId, stream);
 			} catch(Exception e) {
-				e.printStackTrace();
-				//throw new StreamException("Error during streams initialization", e);
+				logger.error(e.getMessage());
 			}
 		}
 	}
@@ -241,6 +240,8 @@ public class StreamsManager implements Runnable {
 	
 	@Override
 	public void run() {
+		
+		logger.info("RUN StreamManager");
 
 		if(state != ManagerState.OPEN) {
 			logger.error("Streams Manager is not open!");
@@ -251,6 +252,7 @@ public class StreamsManager implements Runnable {
 		logger.info(collections.size() + " active collections in db.");
 		for(Collection collection : collections.values()) {
 			try {
+				
 				if(!collectionsUnderMonitoring.containsKey(collection.getId())) {
 					collectionsQueue.put(Pair.of(collection, "collections:new"));
 				}

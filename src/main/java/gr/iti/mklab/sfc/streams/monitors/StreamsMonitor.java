@@ -151,7 +151,9 @@ public class StreamsMonitor implements Runnable {
 
 	@Override
 	public void run() {
-		
+
+		logger.info("NumberOfStreamFetchTasks: " + this.getNumberOfStreamFetchTasks());
+
 		for(String streamId : streamsFetchTasks.keySet()) {
 			StreamFetchTask task = streamsFetchTasks.get(streamId);
 			logger.info("Submit fetch task for " + streamId + " for execution.");

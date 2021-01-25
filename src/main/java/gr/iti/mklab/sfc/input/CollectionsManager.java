@@ -31,8 +31,8 @@ public class CollectionsManager {
 	
 	protected static final String HOST = "mongo.host";
 	protected static final String DB = "mongo.database";
-	protected static final String USERNAME = "mongo.username";
-	protected static final String PWD = "mongo.password";
+	protected static final String USERNAME = "mongodb.username";
+	protected static final String PWD = "mongodb.password";
 	
 	private String host = null;
 	private String db = null;
@@ -118,6 +118,7 @@ public class CollectionsManager {
 			Collection collection = it.next();
 			collections.put(collection.getId(), collection);
 		}
+		
 		return collections;
 	}
 	
@@ -138,6 +139,7 @@ public class CollectionsManager {
 	}
 
 	public Set<Feed> createFeeds() {
+		logger.info("CREATE FEEDS");
 		Set<Feed> feedsSet = new HashSet<Feed>();
 		try {
 			QueryResults<Collection> result = collectionsDao.find();
@@ -145,11 +147,15 @@ public class CollectionsManager {
 			for(Collection collection : collections) {
 				List<Feed> feeds = collection.getFeeds();
 				feedsSet.addAll(feeds);
+
+				logger.info("collection: " + collection.getId() + " feeds: " + feeds.size());
 			}
 		}
 		catch(Exception e) {
 			logger.error(e);
 		}
+		
+		logger.info("Number of Feeds: " + feedsSet.size());
 
 		return feedsSet;
 	}
